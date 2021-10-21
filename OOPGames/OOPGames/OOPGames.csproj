@@ -63,6 +63,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Classes\Vorl_Bsps.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\TicTacToe.cs" />
     <Compile Include="Interfaces\IGamePlayer.cs" />
