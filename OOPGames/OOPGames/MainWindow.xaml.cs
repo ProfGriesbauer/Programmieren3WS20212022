@@ -28,6 +28,12 @@ namespace OOPGames
 
         public MainWindow()
         {
+            //Beipiele
+            Verbraucher verb = new Verbraucher(1000);
+            verb.Spannung = 100;
+
+            string stGesetz = Verbraucher.OhmschesGesetz();
+
             //REGISTER YOUR CLASSES HERE
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());

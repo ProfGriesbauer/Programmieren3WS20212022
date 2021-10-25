@@ -30,6 +30,10 @@ namespace OOPGames
         int CheckIfPLayerWon();
     }
 
+    public interface IGameRules2 : IGameRules
+    {
+        void DoMegaWirbelMarioJump();
+    }
     public interface IGameField
     {
         //Returns true, if the given this game field can be painted by the given painter
