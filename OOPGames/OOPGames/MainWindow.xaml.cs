@@ -29,6 +29,7 @@ namespace OOPGames
         public MainWindow()
         {
             //Beipiele
+            Haus meinHaus = new Haus();
             Verbraucher verb = new Verbraucher(1000);
             verb.Spannung = 100;
 

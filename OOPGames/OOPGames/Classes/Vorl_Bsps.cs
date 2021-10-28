@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OOPGames
 {
-    public class Haus
+
+    public class Haus : IEnumerable<IVerbraucher>, IEnumerator, IEnumerator<IVerbraucher>
     {
         IVerbraucher _Staubsauger;
         IVerbraucher _Fernseher;
@@ -17,10 +20,40 @@ namespace OOPGames
             
         }
 
+        public IVerbraucher CreateStaubsaugerFactoryMethod()
+        {
+            return new Verbraucher(1000);
+        }
+
+        public IEnumerator<IVerbraucher> GetEnumerator()
+        {
+            return this;
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this;
+        }
+
+        public bool MoveNext()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Reset()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Dispose()
+        {
+            throw new NotImplementedException();
+        }
+
         public Haus ()
         {
             _Sonstige = new List<IVerbraucher>();
-            _Sonstige.Add(new Verbraucher(100));
+            _Sonstige.Add(new Verbraucher(-100));
             _Sonstige.Add(new Verbraucher(300));
             _Sonstige.Add(new Wasserkocher());
             _Staubsauger = new Verbraucher(1000);
@@ -50,6 +83,10 @@ namespace OOPGames
                 return ret + _Staubsauger.Strom + _Fernseher.Strom;
             }
         }
+
+        public object Current => throw new NotImplementedException();
+
+        IVerbraucher IEnumerator<IVerbraucher>.Current => throw new NotImplementedException();
     }
 
     public interface ISerializable
@@ -58,7 +95,7 @@ namespace OOPGames
         void deserialize(string stDaten);
     }
 
-    public interface IVerbraucher : ISerializable
+    public interface IVerbraucher
     {
         float Strom { get; }
     }
@@ -101,6 +138,7 @@ namespace OOPGames
 
         public Verbraucher (float wider)
         {
+            Debug.Assert(wider > 0);
             _Wider = wider;
         }
 
