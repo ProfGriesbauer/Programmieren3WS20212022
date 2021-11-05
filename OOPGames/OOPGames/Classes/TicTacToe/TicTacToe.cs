@@ -93,7 +93,7 @@ namespace OOPGames
                     {
                         return p;
                     }
-                    else if (_Field[i, 0] == p && _Field[i, 1] == p && _Field[i, 2] == p)
+                    else if (_Field[0, i] == p && _Field[1, i] == p && _Field[2, i] == p)
                     {
                         return p;
                     }
@@ -131,7 +131,7 @@ namespace OOPGames
 
     public class TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0 , 0}, { 0, 0, 0 }, { 0, 0, 0 } };
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {
