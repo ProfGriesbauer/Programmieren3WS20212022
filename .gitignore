@@ -48,5 +48,6 @@ Thumbs.db
 *.mov
 *.wmv
 
+/OOPGames/OOPGames/.vs/OOPGames/v16/.suo
 bin
 obj
