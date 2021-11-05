@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOPGames
 {
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IGameRules
     {
         //Name of the Rules: possibly use a unique name
@@ -30,10 +31,7 @@ namespace OOPGames
         int CheckIfPLayerWon();
     }
 
-    public interface IGameRules2 : IGameRules
-    {
-        void DoMegaWirbelMarioJump();
-    }
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IGameField
     {
         //Returns true, if the given this game field can be painted by the given painter

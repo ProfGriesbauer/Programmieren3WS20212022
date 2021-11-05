@@ -8,6 +8,7 @@ using System.Windows.Controls;
 namespace OOPGames
 {
     //Any game painting on the canvas needs to implement this interface
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IPaintGame
     {
         //Name of the Game Painter: possibly use a unique name
@@ -20,6 +21,7 @@ namespace OOPGames
 
     //Any game requesting mouse click positions from the canvas get the latter
     //via this interface
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IMoveSelection
     {
         //X position of the mouse click
