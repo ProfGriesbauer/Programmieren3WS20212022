@@ -69,6 +69,8 @@ namespace OOPGames
         {
             //Platz für eigene Erfindungen
             //Wir wollen einen Painter für ein !variables! Feld
+            //Man sollte noch eine Anzeige implementieren, wer dran ist
+
         }
     }
 
@@ -284,9 +286,9 @@ namespace OOPGames
 
         public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     if (selection.XClickPos > 20 + (j*100) && selection.XClickPos < 120 + (j*100) &&
                         selection.YClickPos > 20 + (i*100) && selection.YClickPos < 120 + (i*100))
