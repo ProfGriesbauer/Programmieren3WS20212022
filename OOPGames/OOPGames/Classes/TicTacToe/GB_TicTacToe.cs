@@ -10,7 +10,7 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class GB_TicTacToePaint : BaseTicTacToePaint         //test????
+    public class GB_TicTacToePaint : BaseTicTacToePaint
     {
         public override string Name { get { return "Gruppe B TicTacToePaint"; } }
 
