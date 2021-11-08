@@ -9,6 +9,6 @@ namespace OOPGames.Classes.TicTacToe
 {
     class Gh_TicTacToe
     {
-        printf("Hello WOrld\n");
+        //printf("Hello WOrld\n");
     }
 }
