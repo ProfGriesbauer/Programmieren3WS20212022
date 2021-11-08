@@ -89,18 +89,18 @@ namespace OOPGames
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    if (_Field[i, 0] == p && _Field[i, 1] == p && _Field[i, 2] == p)
+                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
                     {
                         return p;
                     }
-                    else if (_Field[0, i] == p && _Field[1, i] == p && _Field[2, i] == p)
+                    else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
                     {
                         return p;
                     }
                 }
 
-                if (_Field[0, 0] == p && _Field[1, 1] == p && _Field[2, 2] == p ||
-                    _Field[0, 2] == p && _Field[1, 1] == p && _Field[2, 0] == p)
+                if ((_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2]) ||
+                    (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0]))
                 {
                     return p;
                 }
