@@ -138,7 +138,6 @@ namespace OOPGames
 
         public Verbraucher (float wider)
         {
-            Debug.Assert(wider > 0);
             _Wider = wider;
         }
 

@@ -8,7 +8,8 @@ using System.Windows.Controls;
 namespace OOPGames
 {
     //TicTacToe specific paint game
-    public interface IPaintTicTacToe : IPaintGame
+    //DIESES INTERFACE NICHT ÄNDERN!
+   public interface IPaintTicTacToe : IPaintGame
     {
         //Paints the given game field on the given canvas
         //NOTE: Clearing the canvas, etc. has to be done within this function
@@ -16,6 +17,7 @@ namespace OOPGames
     }
 
     //TicTacToe specific game field 3x3
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface ITicTacToeField : IGameField
     {
         //Indexer: returns 0 for a unused tictactoefield, 1 for player 1, 2 for player 2, etc.
@@ -24,6 +26,7 @@ namespace OOPGames
     }
 
     //TicTacToe specific game rules
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface ITicTacToeRules : IGameRules
     {
         //Gets the current state of the tictactoe field; the class implementing
@@ -36,12 +39,14 @@ namespace OOPGames
     }
 
     //TicTacToeMove which is derived from row and column
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface ITicTacToeMove : IRowMove, IColumnMove
     {
 
     }
 
     //TicTacToe specific human player
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IHumanTicTacToePlayer : IHumanGamePlayer
     {
         //Returns a valid move if possible for the given selection and 
@@ -51,6 +56,7 @@ namespace OOPGames
     }
 
     //TicTacToe specific human player
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IComputerTicTacToePlayer : IComputerGamePlayer
     {
         //Returns a valid move and the given state of the tic tac toe field.

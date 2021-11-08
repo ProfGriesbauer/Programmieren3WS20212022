@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 namespace OOPGames
 {
     //Any player of any game has to implement this interface
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IGamePlayer
     {
         //Name of the Game Player: possibly use a unique name
@@ -25,6 +26,7 @@ namespace OOPGames
     }
 
     //A humman player: the painter produces a selection which has to be validated
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IHumanGamePlayer : IGamePlayer
     {
         //Returns a valid move if possible for the given selection and 
@@ -34,6 +36,7 @@ namespace OOPGames
     }
 
     //A computer player: when asked for a move, a valid move is produced by a computer
+    //DIESES INTERFACE NICHT ÄNDERN!
     public interface IComputerGamePlayer : IGamePlayer
     {
         //Returns a valid move for the given state of the play field.

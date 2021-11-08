@@ -10,16 +10,26 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class TicTacToePaint : BaseTicTacToePaint
+    public class GB_TicTacToePaint : BaseTicTacToePaint
     {
-        public override string Name { get { return "VorlesungTicTacToePaint"; } }
+        public override string Name { get { return "Gruppe B TicTacToePaint"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
+            //Hier kann man das richtige Unterprogramm wählen
+
+            PaintTicTacToeField_A(canvas, currentField);
+            //PaintTicTacToeField_B(canvas, currentField);
+        }
+
+        public void PaintTicTacToeField_A(Canvas canvas, ITicTacToeField currentField)
+        {
+            //Abgekupfert von der Vorlage
+
             canvas.Children.Clear();
-            Color bgColor = Color.FromRgb(255, 255, 255);
+            Color bgColor = Color.FromRgb(32, 32, 32);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(0, 255, 0);
+            Color lineColor = Color.FromRgb(255, 0, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
             Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
@@ -54,23 +64,37 @@ namespace OOPGames
                 }
             }
         }
+
+        public void PaintTicTacToeField_B(Canvas canvas, ITicTacToeField currentField)
+        {
+            //Platz für eigene Erfindungen
+            //Wir wollen einen Painter für ein !variables! Feld
+            //Man sollte noch eine Anzeige implementieren, wer dran ist
+
+        }
     }
 
-
-
-    public class TicTacToeRules : BaseTicTacToeRules
+    public class GB_TicTacToeRules : BaseTicTacToeRules
     {
-        TicTacToeField _Field = new TicTacToeField();
+        //Diese Regeln sind auf ein Variables Feld angepasst worden - F-Wurm
+
+        bool _Won = false;
+
+        GB_TicTacToeField _Field = new GB_TicTacToeField(4,4);
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
+
+        public override string Name { get { return "Gruppe B TicTacToeRules"; } }
 
         public override bool MovesPossible 
         { 
             get 
             {
-                for (int i = 0; i < 3; i++)
+                if (_Won) return false;
+
+                for (int i = 0; i < _Field.Rows; i++)
                 {
-                    for (int j = 0; j < 3; j++)
+                    for (int j = 0; j < _Field.Columns; j++)
                     {
                         if (_Field[i, j] == 0)
                         {
@@ -83,26 +107,29 @@ namespace OOPGames
             } 
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
-
         public override int CheckIfPLayerWon()
+        {
+            return CheckIfPlayerWon_B();
+        }
+
+        public int CheckIfPlayerWon_A()
         {
             for (int p = 1; p < 3; p++)
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                    if (_Field[i, 0] == p && _Field[i, 1] == p && _Field[i, 2] == p)
                     {
                         return p;
                     }
-                    else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                    else if (_Field[0, i] == p && _Field[1, i] == p && _Field[2, i] == p)
                     {
                         return p;
                     }
                 }
 
-                if ((_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2]) ||
-                    (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0]))
+                if (_Field[0, 0] == p && _Field[1, 1] == p && _Field[2, 2] == p ||
+                    _Field[0, 2] == p && _Field[1, 1] == p && _Field[2, 0] == p)
                 {
                     return p;
                 }
@@ -111,11 +138,51 @@ namespace OOPGames
             return -1;
         }
 
+        public int CheckIfPlayerWon_B()
+        {
+
+            for (int p = 1; p < 3; p++)
+            {
+                for (int r = 0; r < _Field.Rows; r++)
+                {
+                    for (int c = 0; c < _Field.Columns; c++)
+                    {
+                        bool rv = !(r < 3-1), cv = !(c < 3-1) ;
+
+                        if (rv && _Field[r-2, c] == p && _Field[r-1, c] == p && _Field[r, c] == p)
+                        {
+                            _Won = true;
+                            return p;
+                        }
+                        if (cv && _Field[r, c-2] == p && _Field[r, c-1] == p && _Field[r, c] == p)
+                        {
+                            _Won = true;
+                            return p;
+                        }
+                        if (rv && cv && _Field[r-2, c-2] == p && _Field[r-1, c-1] == p && _Field[r, c] == p)
+                        {
+                            _Won = true;
+                            return p;
+                        }
+                        if (rv && cv && _Field[r, c-2] == p && _Field[r-1, c-1] == p && _Field[r-2, c] == p)
+                        {
+                            _Won = true;
+                            return p;
+                        }
+                    }
+                }
+            }
+
+            return -1;
+        }
+
         public override void ClearField()
         {
-            for (int i = 0; i < 3; i++)
+            _Won = false;
+
+            for (int i = 0; i < _Field.Rows; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < _Field.Columns; j++)
                 {
                     _Field[i, j] = 0;
                 }
@@ -124,22 +191,41 @@ namespace OOPGames
 
         public override void DoTicTacToeMove(ITicTacToeMove move)
         {
-            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            if (move.Row >= 0 && move.Row < _Field.Rows && move.Column >= 0 && move.Column < _Field.Columns)
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
         }
     }
 
-    public class TicTacToeField : BaseTicTacToeField
+    public class GB_TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        //Dieses Feld wurde variabel gemacht - F-Wurm
+        int _Rows, _Colums;
+        int[,] _Field;
+
+        public GB_TicTacToeField()
+        {
+            _Rows = 3; _Colums = 3;
+            _Field = new int[3, 3]; // { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
+        }
+
+        public GB_TicTacToeField(int r, int c)
+        {
+            _Rows = r; _Colums = c;
+            _Field = new int[r, c];
+            
+        }
+
+        public int Columns { get { return _Colums; } }
+
+        public int Rows { get { return _Rows; } }
 
         public override int this[int r, int c]
         {
             get
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                if (r >= 0 && r < _Rows && c >= 0 && c < _Colums)
                 {
                     return _Field[r, c];
                 }
@@ -151,7 +237,7 @@ namespace OOPGames
 
             set
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)
+                if (r >= 0 && r < _Rows && c >= 0 && c < _Colums)
                 {
                     _Field[r, c] = value;
                 }
@@ -159,13 +245,16 @@ namespace OOPGames
         }
     }
 
-    public class TicTacToeMove : ITicTacToeMove
+    /*//
+    //Braucht vorerst nicht neu zu implementiert werden
+
+    public class GB_TicTacToeMove : ITicTacToeMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public TicTacToeMove (int row, int column, int playerNumber)
+        public GB_TicTacToeMove (int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -178,25 +267,28 @@ namespace OOPGames
 
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
+    //*/
 
-    public class TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+    public class GB_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
     {
+        //Diesem menschlichen Spieler soll die Tastatureingabe ermöglicht werden
+
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerHumanTicTacToePlayer"; } }
+        public override string Name { get { return "Gruppe B HumanTicTacToePlayer"; } }
 
         public override IGamePlayer Clone()
         {
-            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
+            GB_TicTacToeHumanPlayer ttthp = new GB_TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
 
         public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 4; i++)
             {
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 4; j++)
                 {
                     if (selection.XClickPos > 20 + (j*100) && selection.XClickPos < 120 + (j*100) &&
                         selection.YClickPos > 20 + (i*100) && selection.YClickPos < 120 + (i*100))
@@ -215,15 +307,18 @@ namespace OOPGames
         }
     }
 
-    public class TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    /*//
+    //Den Computerspieler wollten wir noch nicht implementieren
+
+    public class GB_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerComputerTicTacToePlayer"; } }
+        public override string Name { get { return "Gruppe B ComputerTicTacToePlayer"; } }
 
         public override IGamePlayer Clone()
         {
-            TicTacToeComputerPlayer ttthp = new TicTacToeComputerPlayer();
+            GB_TicTacToeComputerPlayer ttthp = new GB_TicTacToeComputerPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
@@ -254,4 +349,5 @@ namespace OOPGames
             _PlayerNumber = playerNumber;
         }
     }
+    //*/
 }
