@@ -1,5 +1,11 @@
 ﻿/*
 Gruppe H
+
+AUfteilung:
+    -Human Player: Fabian & Julian
+    -Rules: Michael
+    -Computer Player: ___
+    ...
 */
 
 
