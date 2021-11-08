@@ -8,6 +8,8 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
+// Anna help me
+
 namespace OOPGames
 {
     public abstract class GD_TicTacToePaint : IPaintTicTacToe
