@@ -10,6 +10,7 @@ using System.Windows.Shapes;
 
 // Anna help me
 // Anna ist die Beste
+// Anna for president
 namespace OOPGames
 {
     public abstract class GD_TicTacToePaint : IPaintTicTacToe
