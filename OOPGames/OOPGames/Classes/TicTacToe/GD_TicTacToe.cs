@@ -9,7 +9,7 @@ using System.Windows.Media;
 using System.Windows.Shapes;
 
 // Anna help me
-
+// Anna ist die Beste
 namespace OOPGames
 {
     public abstract class GD_TicTacToePaint : IPaintTicTacToe
