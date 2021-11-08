@@ -7,9 +7,11 @@
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="OOPGames" expanded="True">
-            <Node name="OOPGames" expanded="True" selected="True">
+            <Node name="OOPGames" expanded="True">
               <Node name="Classes" expanded="True">
-                <Node name="TicTacToe" expanded="True" />
+                <Node name="TicTacToe" expanded="True">
+                  <Node name="GE_TicTacToe.cs" selected="True" />
+                </Node>
               </Node>
             </Node>
           </Node>
