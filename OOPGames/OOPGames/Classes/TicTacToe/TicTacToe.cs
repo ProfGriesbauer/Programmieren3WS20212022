@@ -19,7 +19,7 @@ namespace OOPGames
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(255, 0, 0);
+            Color lineColor = Color.FromRgb(0, 255, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
             Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
@@ -56,6 +56,8 @@ namespace OOPGames
         }
     }
 
+
+
     public class TicTacToeRules : BaseTicTacToeRules
     {
         TicTacToeField _Field = new TicTacToeField();
@@ -89,18 +91,18 @@ namespace OOPGames
             {
                 for (int i = 0; i < 3; i++)
                 {
-                    if (_Field[i, 0] == p && _Field[i, 1] == p && _Field[i, 2] == p)
+                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
                     {
                         return p;
                     }
-                    else if (_Field[0, i] == p && _Field[1, i] == p && _Field[2, i] == p)
+                    else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
                     {
                         return p;
                     }
                 }
 
-                if (_Field[0, 0] == p && _Field[1, 1] == p && _Field[2, 2] == p ||
-                    _Field[0, 2] == p && _Field[1, 1] == p && _Field[2, 0] == p)
+                if ((_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2]) ||
+                    (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0]))
                 {
                     return p;
                 }
