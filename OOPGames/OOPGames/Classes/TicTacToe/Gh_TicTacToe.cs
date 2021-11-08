@@ -1,4 +1,9 @@
-﻿using System;
+﻿/*
+Gruppe H
+*/
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +14,6 @@ namespace OOPGames.Classes.TicTacToe
 {
     class Gh_TicTacToe
     {
-        printf("Hello WOrld\n");
+        //printf("Hello WOrld\n");
     }
 }
