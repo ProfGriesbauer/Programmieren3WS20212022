@@ -68,9 +68,10 @@ namespace OOPGames
 
     public class GE_TicTacToeRules : BaseTicTacToeRules
     {
-        int fieldSize = [[3,3], [6,6], [9,9]]; //Besser implementieren: WO soll die Variable hin? GB
+
+        int fieldSize;// = [[3,3], [6,6], [9,9]]; //Besser implementieren: WO soll die Variable hin? GB
         int auswahl = 0;
-        TicTacToeField _Field = new GE_TicTacToeField();
+        TicTacToeField _Field;// = new GE_TicTacToeField();
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
@@ -78,6 +79,7 @@ namespace OOPGames
         { 
             get 
             {
+                /*
                 for (int i = 0; i < fieldSize[auswahl][0]; i++)
                 {
                     for (int j = 0; j < fieldSize[auswahl][1]; j++)
@@ -88,7 +90,7 @@ namespace OOPGames
                         }
                     }
                 }
-
+                */
                 return false; 
             } 
         }
