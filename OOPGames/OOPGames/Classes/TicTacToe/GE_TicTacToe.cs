@@ -3,113 +3,265 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
+
+//ToDo:
+/*
+ Am montag den Griesbauer Fragen: 
+-Warum gehts nicht?
+-
+Bisschen einlesen
+ */
 
 namespace OOPGames
 {
-    public abstract class GE_BaseTicTacToePaint : IPaintTicTacToe
+    public class GE_TicTacToePaint : BaseTicTacToePaint
     {
-        public abstract string Name { get; }
+        public override string Name { get { return "GE_TicTacToePaint"; } }
 
-        public abstract void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField);
-
-        public void PaintGameField(Canvas canvas, IGameField currentField)
+        public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
-            if (currentField is ITicTacToeField)
+            canvas.Children.Clear();
+            Color bgColor = Color.FromRgb(255, 255, 255);
+            canvas.Background = new SolidColorBrush(bgColor);
+            Color lineColor = Color.FromRgb(0, 255, 0);
+            Brush lineStroke = new SolidColorBrush(lineColor);
+            Color XColor = Color.FromRgb(0, 255, 0);
+            Brush XStroke = new SolidColorBrush(XColor);
+            Color OColor = Color.FromRgb(0, 0, 255);
+            Brush OStroke = new SolidColorBrush(OColor);
+
+            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l1);
+            Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l2);
+            Line l3 = new Line() { X1 = 20, Y1 = 120, X2 = 320, Y2 = 120, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l3);
+            Line l4 = new Line() { X1 = 20, Y1 = 220, X2 = 320, Y2 = 220, Stroke = lineStroke, StrokeThickness = 3.0 };
+            canvas.Children.Add(l4);
+
+            for (int i = 0; i < 3; i++)
             {
-                PaintTicTacToeField(canvas, (ITicTacToeField)currentField);
+                for (int j = 0; j < 3; j++)
+                {
+                    if (currentField[i, j] == 1)
+                    {
+                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X2);
+                    }
+                    else if (currentField[i, j] == 2)
+                    {
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(OE);
+                    }
+                }
             }
         }
     }
 
-    public abstract class BaseTicTacToeField : ITicTacToeField
-    {
-        public abstract int this[int r, int c] { get; set; }
 
-        public bool CanBePaintedBy(IPaintGame painter)
+
+    public class GE_TicTacToeRules : BaseTicTacToeRules
+    {
+        int fieldSize = [[3,3], [6,6], [9,9]]; //Besser implementieren: WO soll die Variable hin? GB
+        int auswahl = 0;
+        TicTacToeField _Field = new GE_TicTacToeField();
+
+        public override ITicTacToeField TicTacToeField { get { return _Field; } }
+
+        public override bool MovesPossible //muss auf die spielfeldgröße angepasst werden
+        { 
+            get 
+            {
+                for (int i = 0; i < fieldSize[auswahl][0]; i++)
+                {
+                    for (int j = 0; j < fieldSize[auswahl][1]; j++)
+                    {
+                        if (_Field[i, j] == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false; 
+            } 
+        }
+
+        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+
+        public override int CheckIfPLayerWon()//anpassen auf spielfeld größe; (vlt anpassen ab wie viel man gewinnt)
         {
-            return painter is IPaintTicTacToe;
+            for (int p = 1; p < 3; p++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                    {
+                        return p;
+                    }
+                    else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                    {
+                        return p;
+                    }
+                }
+
+                if ((_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2]) ||
+                    (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0]))
+                {
+                    return p;
+                }
+            }
+
+            return -1;
+        }
+
+        public override void ClearField()//anpassen
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _Field[i, j] = 0;
+                }
+            }
+        }
+
+        public override void DoTicTacToeMove(ITicTacToeMove move)//anpassen
+        {
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
+            }
         }
     }
 
-    public abstract class BaseTicTacToeRules : ITicTacToeRules
+    public class GE_TicTacToeField : BaseTicTacToeField
     {
-        public abstract ITicTacToeField TicTacToeField { get; }
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };//anpassen
 
-        public abstract bool MovesPossible { get; }
-
-        public abstract string Name { get; }
-
-        public abstract int CheckIfPLayerWon();
-
-        public abstract void ClearField();
-
-        public abstract void DoTicTacToeMove(ITicTacToeMove move);
-
-        public IGameField CurrentField { get { return TicTacToeField; } }
-
-        public void DoMove(IPlayMove move)
+        public override int this[int r, int c]
         {
-            if (move is ITicTacToeMove)
+            get
             {
-                DoTicTacToeMove((ITicTacToeMove)move);
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)//anpassen
+                {
+                    return _Field[r, c];
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
+            set
+            {
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)//anpassen
+                {
+                    _Field[r, c] = value;
+                }
             }
         }
     }
 
-    public abstract class BaseHumanTicTacToePlayer : IHumanTicTacToePlayer
+    public class GE_TicTacToeMove : ITicTacToeMove
     {
-        public abstract string Name { get; }
+        int _Row = 0;
+        int _Column = 0;
+        int _PlayerNumber = 0;
 
-        public abstract ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field);
-
-        public abstract void SetPlayerNumber(int playerNumber);
-
-        public abstract IGamePlayer Clone();
-
-        public bool CanBeRuledBy(IGameRules rules)
+        public GE_TicTacToeMove (int row, int column, int playerNumber)
         {
-            return rules is ITicTacToeRules;
+            _Row = row;
+            _Column = column;
+            _PlayerNumber = playerNumber;
         }
 
-        public IPlayMove GetMove(IMoveSelection selection, IGameField field)
+        public int Row { get { return _Row; } }
+
+        public int Column { get { return _Column; } }
+
+        public int PlayerNumber { get { return _PlayerNumber; } }
+    }
+
+    public class GE_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public override string Name { get { return "GE_HumanTicTacToePlayer"; } }
+
+        public override IGamePlayer Clone()
         {
-            if (field is ITicTacToeField)
+            GE_TicTacToeHumanPlayer ttthp = new GE_TicTacToeHumanPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)//support für tasten und hidden modus
+        {
+            for (int i = 0; i < 3; i++)//anpassen
             {
-                return GetMove(selection, (ITicTacToeField)field);
+                for (int j = 0; j < 3; j++)//anpassen
+                {
+                    if (selection.XClickPos > 20 + (j*100) && selection.XClickPos < 120 + (j*100) &&
+                        selection.YClickPos > 20 + (i*100) && selection.YClickPos < 120 + (i*100))
+                    {
+                        return new GE_TicTacToeMove(i, j, _PlayerNumber);
+                    }
+                }
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
         }
     }
 
-    public abstract class BaseComputerTicTacToePlayer : IComputerTicTacToePlayer
+   /* public class TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
-        public abstract string Name { get; }
+        int _PlayerNumber = 0;
 
-        public abstract void SetPlayerNumber(int playerNumber);
+        public override string Name { get { return "GriesbauerComputerTicTacToePlayer"; } }
 
-        public abstract ITicTacToeMove GetMove(ITicTacToeField field);
-
-        public abstract IGamePlayer Clone();
-
-        public bool CanBeRuledBy(IGameRules rules)
+        public override IGamePlayer Clone()
         {
-            return rules is ITicTacToeRules;
+            TicTacToeComputerPlayer ttthp = new TicTacToeComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
         }
 
-        public IPlayMove GetMove(IGameField field)
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
         {
-            if (field is ITicTacToeField)
+            Random rand = new Random();
+            int f = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
             {
-                return GetMove((ITicTacToeField)field);
+                int c = f % 3;
+                int r = ((f - c) / 3) % 3;
+                if (field[r, c] <= 0)
+                {
+                    return new TicTacToeMove(r, c, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
             }
-            else
-            {
-                return null;
-            }
+
+            return null;
         }
-    }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }*/
 }
