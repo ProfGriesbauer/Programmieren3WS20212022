@@ -350,7 +350,7 @@ namespace OOPGames
 
         public ITicTacToeMove GetMove_B(IMoveSelection selection, ITicTacToeField field)
         {
-            int x = (selection.XClickPos - 30) / 100, y = (selection.YClickPos - 30) / 100;
+            int x = (selection.XClickPos - 20) / 100, y = (selection.YClickPos - 20) / 100;
             return new TicTacToeMove(y, x, _PlayerNumber);
         }
 
