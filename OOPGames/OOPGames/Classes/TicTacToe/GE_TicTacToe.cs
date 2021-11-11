@@ -27,7 +27,7 @@ namespace OOPGames
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(0, 255, 0);
+            Color lineColor = Color.FromRgb(0, 255, 255);
             Brush lineStroke = new SolidColorBrush(lineColor);
             Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
