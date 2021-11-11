@@ -95,7 +95,7 @@ namespace OOPGames
             } 
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+        public override string Name { get { return "GE_TicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()//anpassen auf spielfeld größe; (vlt anpassen ab wie viel man gewinnt)
         {
