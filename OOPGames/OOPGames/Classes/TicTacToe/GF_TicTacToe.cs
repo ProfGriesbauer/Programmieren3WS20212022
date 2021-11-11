@@ -10,9 +10,9 @@ using System.Windows.Shapes;
 
 namespace OOPGames
 {
-    public class TicTacToePaint : BaseTicTacToePaint
+    public class TicTacToePaint : BaseTicTacToePaint 
     {
-        public override string Name { get { return "VorlesungTicTacToePaint"; } }
+        public override string Name { get { return "FranzlsTicTacToePaint"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
@@ -64,9 +64,9 @@ namespace OOPGames
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible 
-        { 
-            get 
+        public override bool MovesPossible
+        {
+            get
             {
                 for (int i = 0; i < 3; i++)
                 {
@@ -79,11 +79,11 @@ namespace OOPGames
                     }
                 }
 
-                return false; 
-            } 
+                return false;
+            }
         }
 
-        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
+        public override string Name { get { return "FranzlsTicTacToeRules"; } }
 
         public override int CheckIfPLayerWon()
         {
@@ -165,7 +165,7 @@ namespace OOPGames
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public TicTacToeMove (int row, int column, int playerNumber)
+        public TicTacToeMove(int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -183,7 +183,7 @@ namespace OOPGames
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerHumanTicTacToePlayer"; } }
+        public override string Name { get { return "FranzlsHumanTicTacToePlayer"; } }
 
         public override IGamePlayer Clone()
         {
@@ -198,8 +198,8 @@ namespace OOPGames
             {
                 for (int j = 0; j < 3; j++)
                 {
-                    if (selection.XClickPos > 20 + (j*100) && selection.XClickPos < 120 + (j*100) &&
-                        selection.YClickPos > 20 + (i*100) && selection.YClickPos < 120 + (i*100))
+                    if (selection.XClickPos > 20 + (j * 100) && selection.XClickPos < 120 + (j * 100) &&
+                        selection.YClickPos > 20 + (i * 100) && selection.YClickPos < 120 + (i * 100))
                     {
                         return new TicTacToeMove(i, j, _PlayerNumber);
                     }
@@ -219,7 +219,7 @@ namespace OOPGames
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GriesbauerComputerTicTacToePlayer"; } }
+        public override string Name { get { return "FranzlsComputerTicTacToePlayer"; } }
 
         public override IGamePlayer Clone()
         {
