@@ -71,7 +71,7 @@ namespace OOPGames
     
     public class GE_TicTacToeRules : BaseTicTacToeRules
     {
-        TicTacToeField _Field = new TicTacToeField();
+        GE_TicTacToeField _Field = new GE_TicTacToeField(5);
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
@@ -220,7 +220,20 @@ namespace OOPGames
     */
     public class GE_TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };//anpassen
+        int _Size;
+        int[,] _Field;
+        public GE_TicTacToeField(int s)
+        {
+            _Size = s;
+            _Field = new int[s, s];
+            for(int i = 0; i < s; i++)
+            {
+                for(int j = 0; j < s; j++)
+                {
+                    _Field[i,j] = 0;
+                }
+            }
+        }
 
         public override int this[int r, int c]
         {
