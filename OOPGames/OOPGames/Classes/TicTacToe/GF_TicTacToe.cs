@@ -13,6 +13,7 @@ namespace OOPGames
     public class TicTacToePaint : BaseTicTacToePaint
     {
         public override string Name { get { return "VorlesungFranzlsTicTacToePaint"; } }
+        //gehts etz echt<<?
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
