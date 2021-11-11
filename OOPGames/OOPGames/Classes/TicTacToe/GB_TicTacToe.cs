@@ -12,14 +12,24 @@ namespace OOPGames
 {
     public class GB_TicTacToePaint : BaseTicTacToePaint
     {
+        //Dieser Painter ist variabel gemacht worden - F-Wurm
+        //Dieser Painter hat seinen eigenen Stil gekriegt - F-Wurm
+
         public override string Name { get { return "Gruppe B TicTacToePaint"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             //Hier kann man das richtige Unterprogramm wählen
 
-            PaintTicTacToeField_A(canvas, currentField);
-            //PaintTicTacToeField_B(canvas, currentField);
+            if (currentField is GB_TicTacToeField)
+            {
+                PaintTicTacToeField_B(canvas, (GB_TicTacToeField)currentField);
+            }
+            else
+            {
+                PaintTicTacToeField_A(canvas, currentField);
+            }
+
         }
 
         public void PaintTicTacToeField_A(Canvas canvas, ITicTacToeField currentField)
@@ -65,12 +75,42 @@ namespace OOPGames
             }
         }
 
-        public void PaintTicTacToeField_B(Canvas canvas, ITicTacToeField currentField)
+        public void PaintTicTacToeField_B(Canvas canvas, GB_TicTacToeField currentField)
         {
-            //Platz für eigene Erfindungen
-            //Wir wollen einen Painter für ein !variables! Feld
-            //Man sollte noch eine Anzeige implementieren, wer dran ist
+            canvas.Children.Clear();
+            Color bgColor = Color.FromRgb(32, 32, 32);
+            canvas.Background = new SolidColorBrush(bgColor);
+            Color backColor = Color.FromRgb(64, 64, 64);
+            Brush backStroke = new SolidColorBrush(backColor);
+            Color XColor = Color.FromRgb(0, 0, 255);
+            Brush XStroke = new SolidColorBrush(XColor);
+            Color OColor = Color.FromRgb(0, 255, 0);
+            Brush OStroke = new SolidColorBrush(OColor);
 
+            for (int i = 0; i < currentField.Rows; i++)
+            {
+                for (int j = 0; j < currentField.Columns; j++)
+                {
+                    int x0 = (j * 100), y0 = (i * 100);
+
+                    Rectangle rect = new Rectangle() { Width = 90, Height = 90, Stroke = backStroke };
+                    Canvas.SetLeft(rect, x0 + 25); Canvas.SetTop(rect, y0 + 25);
+                    canvas.Children.Add(rect);
+
+                    if (currentField[i, j] == 1)
+                    {
+                        Line X1 = new Line() { X1 = 30 + x0, Y1 = 30 + y0, X2 = 110 + x0, Y2 = 110 + y0, Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X1);
+                        Line X2 = new Line() { X1 = 30 + x0, Y1 = 110 + y0, X2 = 110 + x0, Y2 = 30 + y0, Stroke = XStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(X2);
+                    }
+                    else if (currentField[i, j] == 2)
+                    {
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(25 + x0, 25 + y0, 0, 0), Width = 90, Height = 90, Stroke = OStroke, StrokeThickness = 3.0 };
+                        canvas.Children.Add(OE);
+                    }
+                }
+            }
         }
     }
 
@@ -80,15 +120,15 @@ namespace OOPGames
 
         bool _Won = false;
 
-        GB_TicTacToeField _Field = new GB_TicTacToeField(4,4);
+        GB_TicTacToeField _Field = new GB_TicTacToeField(4, 4);
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
         public override string Name { get { return "Gruppe B TicTacToeRules"; } }
 
-        public override bool MovesPossible 
-        { 
-            get 
+        public override bool MovesPossible
+        {
+            get
             {
                 if (_Won) return false;
 
@@ -103,8 +143,8 @@ namespace OOPGames
                     }
                 }
 
-                return false; 
-            } 
+                return false;
+            }
         }
 
         public override int CheckIfPLayerWon()
@@ -147,24 +187,24 @@ namespace OOPGames
                 {
                     for (int c = 0; c < _Field.Columns; c++)
                     {
-                        bool rv = !(r < 3-1), cv = !(c < 3-1) ;
+                        bool rv = !(r < 3 - 1), cv = !(c < 3 - 1);
 
-                        if (rv && _Field[r-2, c] == p && _Field[r-1, c] == p && _Field[r, c] == p)
+                        if (rv && _Field[r - 2, c] == p && _Field[r - 1, c] == p && _Field[r, c] == p)
                         {
                             _Won = true;
                             return p;
                         }
-                        if (cv && _Field[r, c-2] == p && _Field[r, c-1] == p && _Field[r, c] == p)
+                        if (cv && _Field[r, c - 2] == p && _Field[r, c - 1] == p && _Field[r, c] == p)
                         {
                             _Won = true;
                             return p;
                         }
-                        if (rv && cv && _Field[r-2, c-2] == p && _Field[r-1, c-1] == p && _Field[r, c] == p)
+                        if (rv && cv && _Field[r - 2, c - 2] == p && _Field[r - 1, c - 1] == p && _Field[r, c] == p)
                         {
                             _Won = true;
                             return p;
                         }
-                        if (rv && cv && _Field[r, c-2] == p && _Field[r-1, c-1] == p && _Field[r-2, c] == p)
+                        if (rv && cv && _Field[r, c - 2] == p && _Field[r - 1, c - 1] == p && _Field[r - 2, c] == p)
                         {
                             _Won = true;
                             return p;
@@ -201,6 +241,7 @@ namespace OOPGames
     public class GB_TicTacToeField : BaseTicTacToeField
     {
         //Dieses Feld wurde variabel gemacht - F-Wurm
+
         int _Rows, _Colums;
         int[,] _Field;
 
@@ -214,7 +255,7 @@ namespace OOPGames
         {
             _Rows = r; _Colums = c;
             _Field = new int[r, c];
-            
+
         }
 
         public int Columns { get { return _Colums; } }
@@ -272,6 +313,7 @@ namespace OOPGames
     public class GB_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
     {
         //Diesem menschlichen Spieler soll die Tastatureingabe ermöglicht werden
+        //Dieser menschliche Spieler kann beliebige Felder besetzen - F-Wurm
 
         int _PlayerNumber = 0;
 
@@ -286,12 +328,17 @@ namespace OOPGames
 
         public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
+            return GetMove_B(selection, field);
+        }
+
+        public ITicTacToeMove GetMove_A(IMoveSelection selection, ITicTacToeField field)
+        {
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < 4; j++)
                 {
-                    if (selection.XClickPos > 20 + (j*100) && selection.XClickPos < 120 + (j*100) &&
-                        selection.YClickPos > 20 + (i*100) && selection.YClickPos < 120 + (i*100))
+                    if (selection.XClickPos > 20 + (j * 100) && selection.XClickPos < 120 + (j * 100) &&
+                        selection.YClickPos > 20 + (i * 100) && selection.YClickPos < 120 + (i * 100))
                     {
                         return new TicTacToeMove(i, j, _PlayerNumber);
                     }
@@ -299,6 +346,12 @@ namespace OOPGames
             }
 
             return null;
+        }
+
+        public ITicTacToeMove GetMove_B(IMoveSelection selection, ITicTacToeField field)
+        {
+            int x = (selection.XClickPos - 20) / 100, y = (selection.YClickPos - 20) / 100;
+            return new TicTacToeMove(y, x, _PlayerNumber);
         }
 
         public override void SetPlayerNumber(int playerNumber)

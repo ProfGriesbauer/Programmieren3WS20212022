@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,29 +8,18 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
 
-//ToDo:
-/*
- Am montag den Griesbauer Fragen: 
--Warum gehts nicht?
--Test
-Bisschen einlesen
-
-Test
-
- */
-
 namespace OOPGames
 {
-    public class GE_TicTacToePaint : BaseTicTacToePaint
+    public class TicTacToePaint : BaseTicTacToePaint
     {
-        public override string Name { get { return "GE_TicTacToePaint"; } }
+        public override string Name { get { return "VorlesungTicTacToePaint"; } }
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(0, 255, 255);
+            Color lineColor = Color.FromRgb(0, 255, 0);
             Brush lineStroke = new SolidColorBrush(lineColor);
             Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
@@ -69,23 +58,19 @@ namespace OOPGames
 
 
 
-    public class GE_TicTacToeRules : BaseTicTacToeRules
+    public class TicTacToeRules : BaseTicTacToeRules
     {
-
-        int fieldSize;// = [[3,3], [6,6], [9,9]]; //Besser implementieren: WO soll die Variable hin? GB
-        int auswahl = 0;
-        TicTacToeField _Field;// = new GE_TicTacToeField();
+        TicTacToeField _Field = new TicTacToeField();
 
         public override ITicTacToeField TicTacToeField { get { return _Field; } }
 
-        public override bool MovesPossible //muss auf die spielfeldgröße angepasst werden
+        public override bool MovesPossible 
         { 
             get 
             {
-                /*
-                for (int i = 0; i < fieldSize[auswahl][0]; i++)
+                for (int i = 0; i < 3; i++)
                 {
-                    for (int j = 0; j < fieldSize[auswahl][1]; j++)
+                    for (int j = 0; j < 3; j++)
                     {
                         if (_Field[i, j] == 0)
                         {
@@ -93,14 +78,14 @@ namespace OOPGames
                         }
                     }
                 }
-                */
+
                 return false; 
             } 
         }
 
-        public override string Name { get { return "GE_TicTacToeRules"; } }
+        public override string Name { get { return "GriesbauerTicTacToeRules"; } }
 
-        public override int CheckIfPLayerWon()//anpassen auf spielfeld größe; (vlt anpassen ab wie viel man gewinnt)
+        public override int CheckIfPLayerWon()
         {
             for (int p = 1; p < 3; p++)
             {
@@ -126,7 +111,7 @@ namespace OOPGames
             return -1;
         }
 
-        public override void ClearField()//anpassen
+        public override void ClearField()
         {
             for (int i = 0; i < 3; i++)
             {
@@ -137,7 +122,7 @@ namespace OOPGames
             }
         }
 
-        public override void DoTicTacToeMove(ITicTacToeMove move)//anpassen
+        public override void DoTicTacToeMove(ITicTacToeMove move)
         {
             if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
             {
@@ -146,15 +131,15 @@ namespace OOPGames
         }
     }
 
-    public class GE_TicTacToeField : BaseTicTacToeField
+    public class TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };//anpassen
+        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
 
         public override int this[int r, int c]
         {
             get
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)//anpassen
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
                     return _Field[r, c];
                 }
@@ -166,7 +151,7 @@ namespace OOPGames
 
             set
             {
-                if (r >= 0 && r < 3 && c >= 0 && c < 3)//anpassen
+                if (r >= 0 && r < 3 && c >= 0 && c < 3)
                 {
                     _Field[r, c] = value;
                 }
@@ -174,13 +159,13 @@ namespace OOPGames
         }
     }
 
-    public class GE_TicTacToeMove : ITicTacToeMove
+    public class TicTacToeMove : ITicTacToeMove
     {
         int _Row = 0;
         int _Column = 0;
         int _PlayerNumber = 0;
 
-        public GE_TicTacToeMove (int row, int column, int playerNumber)
+        public TicTacToeMove (int row, int column, int playerNumber)
         {
             _Row = row;
             _Column = column;
@@ -194,29 +179,29 @@ namespace OOPGames
         public int PlayerNumber { get { return _PlayerNumber; } }
     }
 
-    public class GE_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
+    public class TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
-        public override string Name { get { return "GE_HumanTicTacToePlayer"; } }
+        public override string Name { get { return "GriesbauerHumanTicTacToePlayer"; } }
 
         public override IGamePlayer Clone()
         {
-            GE_TicTacToeHumanPlayer ttthp = new GE_TicTacToeHumanPlayer();
+            TicTacToeHumanPlayer ttthp = new TicTacToeHumanPlayer();
             ttthp.SetPlayerNumber(_PlayerNumber);
             return ttthp;
         }
 
-        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)//support für tasten und hidden modus
+        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field)
         {
-            for (int i = 0; i < 3; i++)//anpassen
+            for (int i = 0; i < 3; i++)
             {
-                for (int j = 0; j < 3; j++)//anpassen
+                for (int j = 0; j < 3; j++)
                 {
                     if (selection.XClickPos > 20 + (j*100) && selection.XClickPos < 120 + (j*100) &&
                         selection.YClickPos > 20 + (i*100) && selection.YClickPos < 120 + (i*100))
                     {
-                        return new GE_TicTacToeMove(i, j, _PlayerNumber);
+                        return new TicTacToeMove(i, j, _PlayerNumber);
                     }
                 }
             }
@@ -230,7 +215,7 @@ namespace OOPGames
         }
     }
 
-   /* public class TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    public class TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
 
@@ -268,5 +253,5 @@ namespace OOPGames
         {
             _PlayerNumber = playerNumber;
         }
-    }*/
+    }
 }
