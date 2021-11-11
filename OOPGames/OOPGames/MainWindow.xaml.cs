@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace OOPGames
 {
@@ -25,6 +26,8 @@ namespace OOPGames
         IGameRules _CurrentRules = null;
         IGamePlayer _CurrentPlayer1 = null;
         IGamePlayer _CurrentPlayer2 = null;
+
+        DispatcherTimer _PaintTimer = null;
 
         public MainWindow()
         {
@@ -58,6 +61,20 @@ namespace OOPGames
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
             Player2List.ItemsSource = OOPGamesManager.Singleton.Players;
             RulesList.ItemsSource = OOPGamesManager.Singleton.Rules;
+
+            _PaintTimer = new DispatcherTimer();
+            _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
+            _PaintTimer.Tick += _PaintTimer_Tick;
+            _PaintTimer.Start();
+        }
+
+        private void _PaintTimer_Tick(object sender, EventArgs e)
+        {
+            if (_CurrentPainter != null &&
+                   _CurrentRules != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
+            {
+                _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+            }
         }
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
@@ -84,7 +101,6 @@ namespace OOPGames
             {
                 Status.Text = "Game startet!";
                 _CurrentRules.ClearField();
-                _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
             }
         }
@@ -106,7 +122,6 @@ namespace OOPGames
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
-                        _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                     }
 
                     winner = _CurrentRules.CheckIfPLayerWon();
@@ -136,7 +151,6 @@ namespace OOPGames
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
-                        _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                     }
 
                     _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
@@ -144,6 +158,12 @@ namespace OOPGames
                     DoComputerMoves();
                 }
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _PaintTimer.Stop();
+            _PaintTimer = null;
         }
     }
 }
