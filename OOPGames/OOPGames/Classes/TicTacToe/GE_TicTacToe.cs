@@ -68,11 +68,85 @@ namespace OOPGames
     }
 
 
+    
+    public class GE_TicTacToeRules : BaseTicTacToeRules
+    {
+        GE_TicTacToeField _Field = new GE_TicTacToeField(5);
 
+        public override ITicTacToeField TicTacToeField { get { return _Field; } }
+
+        public override bool MovesPossible 
+        { 
+            get 
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (_Field[i, j] == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false; 
+            } 
+        }
+
+        public override string Name { get { return "GE_TicTacToeRules"; } }
+
+        public override int CheckIfPLayerWon()
+        {
+            for (int p = 1; p < 3; p++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                    {
+                        return p;
+                    }
+                    else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                    {
+                        return p;
+                    }
+                }
+
+                if ((_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2]) ||
+                    (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0]))
+                {
+                    return p;
+                }
+            }
+
+            return -1;
+        }
+
+        public override void ClearField()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _Field[i, j] = 0;
+                }
+            }
+        }
+
+        public override void DoTicTacToeMove(ITicTacToeMove move)
+        {
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
+            }
+        }
+    }
+
+    /*
     public class GE_TicTacToeRules : BaseTicTacToeRules
     {
 
-        int fieldSize;// = [[3,3], [6,6], [9,9]]; //Besser implementieren: WO soll die Variable hin? GB
+        int[,] fieldSize = {{3,3}, {6,6}, {9,9}}; //Besser implementieren: WO soll die Variable hin? GB
         int auswahl = 0;
         TicTacToeField _Field;// = new GE_TicTacToeField();
 
@@ -82,7 +156,6 @@ namespace OOPGames
         { 
             get 
             {
-                /*
                 for (int i = 0; i < fieldSize[auswahl][0]; i++)
                 {
                     for (int j = 0; j < fieldSize[auswahl][1]; j++)
@@ -93,7 +166,6 @@ namespace OOPGames
                         }
                     }
                 }
-                */
                 return false; 
             } 
         }
@@ -145,10 +217,23 @@ namespace OOPGames
             }
         }
     }
-
+    */
     public class GE_TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };//anpassen
+        int _Size;
+        int[,] _Field;
+        public GE_TicTacToeField(int s)
+        {
+            _Size = s;
+            _Field = new int[s, s];
+            for(int i = 0; i < s; i++)
+            {
+                for(int j = 0; j < s; j++)
+                {
+                    _Field[i,j] = 0;
+                }
+            }
+        }
 
         public override int this[int r, int c]
         {
@@ -173,7 +258,7 @@ namespace OOPGames
             }
         }
     }
-
+    
     public class GE_TicTacToeMove : ITicTacToeMove
     {
         int _Row = 0;
