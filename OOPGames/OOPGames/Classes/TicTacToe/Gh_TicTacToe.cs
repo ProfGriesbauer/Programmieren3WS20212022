@@ -45,17 +45,17 @@ namespace OOPGames
 
         public override void PaintTicTacToeField(Canvas canvas, ITicTacToeField currentField)
         {
-            canvas.Children.Clear();
-            Color bgColor = ConsoleColor.FromRgb(255, 255, 255);
-            canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = color.FromRgb(0, 255, 0);
+            canvas.Children.Clear();                                    
+            Color bgColor = ConsoleColor.FromRgb(255, 255, 255);        //Backgroundcolor Weiß
+            canvas.Background = new SolidColorBrush(bgColor);           
+            Color lineColor = color.FromRgb(0, 0, 0);                 //Linienfarbe schwarz Spielfeld
             Brush lineStroke = new SolidColorBrush(lineColor);
-            Color XColor = bgColor.FromRgb(0, 255, 0);
+            Color XColor = bgColor.FromRgb(0, 255, 0);                  //LInienfarbe Grün Kreuz
             Brush XStroke = new SolidColorBrush(XColor);
-            Color OColor = Color.FromRgb(0, 0, 255);
+            Color OColor = Color.FromRgb(255, 0, 0);                    //Linienfarbe Rot Ellipse
             Brush OStroke = new SolidColorBrush(OColor);
 
-            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
+            Line l1 = new Line() { X1 = 120, Y1 = 20, X2 = 120, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 }; //Linien für das Spielfeld
             canvas.Children.Add(l1);
             Line l2 = new Line() { X1 = 220, Y1 = 20, X2 = 220, Y2 = 320, Stroke = lineStroke, StrokeThickness = 3.0 };
             canvas.Children.Add(l2);
@@ -70,14 +70,14 @@ namespace OOPGames
                 {
                     if (currentField[i, j] == 1)
                     {
-                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
+                        Line X1 = new Line() { X1 = 20 + (j * 100), Y1 = 20 + (i * 100), X2 = 120 + (j * 100), Y2 = 120 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 }; //Kreuz
                         canvas.Children.Add(X1);
                         Line X2 = new Line() { X1 = 20 + (j * 100), Y1 = 120 + (i * 100), X2 = 120 + (j * 100), Y2 = 20 + (i * 100), Stroke = XStroke, StrokeThickness = 3.0 };
                         canvas.Children.Add(X2);
                     }
                     else if (currentField[i, j] == 2)
                     {
-                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 };
+                        Ellipse OE = new Ellipse() { Margin = new Thickness(20 + (j * 100), 20 + (i * 100), 0, 0), Width = 100, Height = 100, Stroke = OStroke, StrokeThickness = 3.0 }; //Ellipse
                         canvas.Children.Add(OE);
                     }
                 }
