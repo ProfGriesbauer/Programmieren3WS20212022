@@ -12,7 +12,7 @@ namespace OOPGames
 {
     //Erbreihenfolge: BaseTicTactoe(abstrakte Klasse) : ITickTacToe : I
 
-    public class GGTicTacToeComputerPlayer
+    public class GGTicTacToeComputerPlayer 
     {
 
     }
