@@ -1,6 +1,13 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\OOPGames",
+    "\\OOPGames\\OOPGames",
+    "\\OOPGames\\OOPGames\\Classes",
+    "\\OOPGames\\OOPGames\\Classes\\TicTacToe",
+    "\\OOPGames\\OOPGames\\Interfaces",
+    "\\OOPGames\\OOPGames\\Interfaces\\TicTacToe"
   ],
+  "SelectedNode": "\\OOPGames\\OOPGames\\OOPGames.csproj",
   "PreviewInSolutionExplorer": false
 }

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace OOPGames
 {
@@ -26,6 +27,8 @@ namespace OOPGames
         IGamePlayer _CurrentPlayer1 = null;
         IGamePlayer _CurrentPlayer2 = null;
 
+        DispatcherTimer _PaintTimer = null;
+
         public MainWindow()
         {
             //Beipiele
@@ -39,6 +42,8 @@ namespace OOPGames
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new GE_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new BiemelPainter());
+            OOPGamesManager.Singleton.RegisterPainter(new BiemelPainterAlt1());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GE_TicTacToeRules());
@@ -46,6 +51,8 @@ namespace OOPGames
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GB_TicTacToeRules());
+            OOPGamesManager.Singleton.RegisterRules(new BiemelRules());
+            OOPGamesManager.Singleton.RegisterRules(new Gh_TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GB_TicTacToeHumanPlayer());
@@ -58,6 +65,20 @@ namespace OOPGames
             Player1List.ItemsSource = OOPGamesManager.Singleton.Players;
             Player2List.ItemsSource = OOPGamesManager.Singleton.Players;
             RulesList.ItemsSource = OOPGamesManager.Singleton.Rules;
+
+            _PaintTimer = new DispatcherTimer();
+            _PaintTimer.Interval = new TimeSpan(0, 0, 0, 0, 40);
+            _PaintTimer.Tick += _PaintTimer_Tick;
+            _PaintTimer.Start();
+        }
+
+        private void _PaintTimer_Tick(object sender, EventArgs e)
+        {
+            if (_CurrentPainter != null &&
+                   _CurrentRules != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
+            {
+                _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
+            }
         }
 
         private void StartGame_Click(object sender, RoutedEventArgs e)
@@ -84,7 +105,6 @@ namespace OOPGames
             {
                 Status.Text = "Game startet!";
                 _CurrentRules.ClearField();
-                _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                 DoComputerMoves();
             }
         }
@@ -106,7 +126,6 @@ namespace OOPGames
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
-                        _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                     }
 
                     winner = _CurrentRules.CheckIfPLayerWon();
@@ -116,6 +135,7 @@ namespace OOPGames
                     }
 
                     _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                    //Tenärer Operator("if-else-Block verkürzt") (if CP == CP1){CP=CP2}else{CP=CP1}
                 }
             }
         }
@@ -136,7 +156,6 @@ namespace OOPGames
                     if (pm != null)
                     {
                         _CurrentRules.DoMove(pm);
-                        _CurrentPainter.PaintGameField(PaintCanvas, _CurrentRules.CurrentField);
                     }
 
                     _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
@@ -144,6 +163,12 @@ namespace OOPGames
                     DoComputerMoves();
                 }
             }
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            _PaintTimer.Stop();
+            _PaintTimer = null;
         }
     }
 }
