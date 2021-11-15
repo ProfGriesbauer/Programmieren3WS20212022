@@ -215,43 +215,7 @@ namespace OOPGames
 
 
     }
-
-     public class GA_TicTacToeHumanPlayer : BaseHumanTicTacToePlayer
-    {
-        int _PlayerNumber = 0;
-
-        public override string Name { get { return "Gruppe A HumanTicTacToePlayer"; } }
-
-        public override IGamePlayer Clone()
-        {
-            GA_TicTacToeHumanPlayer ttthp = new GA_TicTacToeHumanPlayer();
-            ttthp.SetPlayerNumber(_PlayerNumber);
-            return ttthp;
-        }
-
-        public override ITicTacToeMove GetMove(IMoveSelection selection, ITicTacToeField field) //evtl Eigene funktion (Wie bei Gruppe B)
-        {
-            for (int i = 0; i < 3; i++)
-            {
-                for (int j = 0; j < 3; j++)
-                {
-                    if (selection.XClickPos > 20 + (j * 100) && selection.XClickPos < 120 + (j * 100) &&
-                        selection.YClickPos > 20 + (i * 100) && selection.YClickPos < 120 + (i * 100))
-                    {
-                        return new TicTacToeMove(i, j, _PlayerNumber);
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        public override void SetPlayerNumber(int playerNumber)
-        {
-            _PlayerNumber = playerNumber;
-        }
-    }
-
+    OOPGamesManager.Singleton.RegisterPlayer(new GE_TicTacToeHumanPlayer());
     public class GA_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
