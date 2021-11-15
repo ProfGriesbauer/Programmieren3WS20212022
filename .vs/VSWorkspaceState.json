@@ -4,7 +4,9 @@
     "\\OOPGames",
     "\\OOPGames\\OOPGames",
     "\\OOPGames\\OOPGames\\Classes",
-    "\\OOPGames\\OOPGames\\Classes\\TicTacToe"
+    "\\OOPGames\\OOPGames\\Classes\\TicTacToe",
+    "\\OOPGames\\OOPGames\\Interfaces",
+    "\\OOPGames\\OOPGames\\Interfaces\\TicTacToe"
   ],
   "SelectedNode": "\\OOPGames\\OOPGames\\Classes\\TicTacToe\\GG_TicTacToe.cs",
   "PreviewInSolutionExplorer": false
