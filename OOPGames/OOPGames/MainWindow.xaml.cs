@@ -52,7 +52,6 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GB_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new BiemelRules());
-            OOPGamesManager.Singleton.RegisterRules(new Gh_TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GB_TicTacToeHumanPlayer());
@@ -99,6 +98,11 @@ namespace OOPGames
             _CurrentPlayer = _CurrentPlayer1;
             _CurrentPainter = PaintList.SelectedItem as IPaintGame;
             _CurrentRules = RulesList.SelectedItem as IGameRules;
+
+            if (_CurrentRules is ITicTacToeRules_GE)
+            {
+                ((ITicTacToeRules_GE)_CurrentRules).AskForGameSize();
+            }
 
             if (_CurrentPainter != null && 
                 _CurrentRules != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
