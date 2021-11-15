@@ -91,6 +91,8 @@ namespace OOPGames
         static int _Rows = 3;
         static int _Cols = 3;
 
+        //vorbereitung für Variable größe
+
         int[,] _Field = new int[_Rows, _Cols];
 
         public override int this[int r, int c]
@@ -116,11 +118,20 @@ namespace OOPGames
             }
         }
 
+        public int rowSize 
+        { get { return _Rows; }
+          
+        }
+
+
+        public int colSize
+        {
+            get { return _Cols; }
+            
+        }
+
 
     }
-
-
-
 
 
         public class Gh_TicTacToeRules : BaseTicTacToeRules
