@@ -1,3 +1,5 @@
+//Gruppe GI Stand: 15.11.2021, 10:06 Uhr
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
