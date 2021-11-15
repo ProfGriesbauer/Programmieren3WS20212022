@@ -52,6 +52,7 @@ namespace OOPGames
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GB_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new BiemelRules());
+            OOPGamesManager.Singleton.RegisterRules(new Gh_TicTacToeRules());
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GB_TicTacToeHumanPlayer());
@@ -134,6 +135,7 @@ namespace OOPGames
                     }
 
                     _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                    //Tenärer Operator("if-else-Block verkürzt") (if CP == CP1){CP=CP2}else{CP=CP1}
                 }
             }
         }
