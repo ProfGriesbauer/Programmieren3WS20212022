@@ -4,6 +4,7 @@
 //Markus HumanPlayer
 //Raphi rules
 //Michi Move
+//Test 10:42
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,5 @@ namespace OOPGames
                 }
             }
         }
-
     }
 }
