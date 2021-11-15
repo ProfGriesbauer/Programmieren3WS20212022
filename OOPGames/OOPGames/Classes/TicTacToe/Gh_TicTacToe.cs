@@ -85,7 +85,45 @@ namespace OOPGames
         }
     }
 
-    public class Gh_TicTacToeRules : BaseTicTacToeRules
+    public class Gh_TicTacToeField : BaseTicTacToeField
+    {
+
+        static int _Rows = 3;
+        static int _Cols = 3;
+
+        int[,] _Field = new int[_Rows, _Cols];
+
+        public override int this[int r, int c]
+        {
+            get
+            {
+                if (r >= 0 && r < _Rows && c >= 0 && c < _Cols)
+                {
+                    return _Field[r, c];
+                }
+                else
+                {
+                    return -1;
+                }
+            }
+
+            set
+            {
+                if (r >= 0 && r < _Rows && c >= 0 && c <  _Cols)
+                {
+                    _Field[r, c] = value;
+                }
+            }
+        }
+
+
+    }
+
+
+
+
+
+        public class Gh_TicTacToeRules : BaseTicTacToeRules
     {
         TicTacToeField _Field = new TicTacToeField();
 
