@@ -1,4 +1,9 @@
-//test 4
+//Aufgaben:
+//Lena Field
+//Moritz Paint
+//Markus HumanPlayer
+//Raphi rules
+//Michi Move
 using System;
 using System.Collections.Generic;
 using System.Linq;
