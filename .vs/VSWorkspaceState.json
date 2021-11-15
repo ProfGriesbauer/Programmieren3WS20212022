@@ -2,8 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\MLBattle",
+    "\\MLBattle\\PicModels",
+    "\\MLBattle\\PTCModels",
     "\\OOPGames",
     "\\OOPGames\\OOPGames"
   ],
+  "SelectedNode": "\\MLBattle\\PicModels",
   "PreviewInSolutionExplorer": false
 }
