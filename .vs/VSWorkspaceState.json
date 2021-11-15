@@ -2,18 +2,10 @@
   "ExpandedNodes": [
     "",
     "\\OOPGames",
-<<<<<<< HEAD
-    "\\OOPGames\\OOPGames"
-  ],
-  "SelectedNode": "\\OOPGames\\OOPGames\\OOPGames.sln",
-=======
     "\\OOPGames\\OOPGames",
     "\\OOPGames\\OOPGames\\Classes",
-    "\\OOPGames\\OOPGames\\Classes\\TicTacToe",
-    "\\OOPGames\\OOPGames\\Interfaces",
-    "\\OOPGames\\OOPGames\\Interfaces\\TicTacToe"
+    "\\OOPGames\\OOPGames\\Classes\\TicTacToe"
   ],
-  "SelectedNode": "\\OOPGames\\OOPGames\\Classes\\TicTacToe\\G_TicTacToe.cs",
->>>>>>> 1f4aa5e4968c718aae1850ce6ce22b88c7ba3aeb
+  "SelectedNode": "\\OOPGames\\OOPGames\\Classes\\TicTacToe\\GA_TicTacToe.cs",
   "PreviewInSolutionExplorer": false
 }
