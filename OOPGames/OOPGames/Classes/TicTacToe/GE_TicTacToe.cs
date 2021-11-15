@@ -69,7 +69,7 @@ namespace OOPGames
 
 
     
-    public class GE_TicTacToeRules : BaseTicTacToeRules
+    public class GE_TicTacToeRules : BaseTicTacToeRules_GE
     {
         GE_TicTacToeField _Field = new GE_TicTacToeField(5);
 
@@ -139,6 +139,11 @@ namespace OOPGames
             {
                 _Field[move.Row, move.Column] = move.PlayerNumber;
             }
+        }
+
+        public override void AskForGameSize()
+        {
+            throw new NotImplementedException();
         }
     }
 
@@ -218,6 +223,34 @@ namespace OOPGames
         }
     }
     */
+
+    public abstract class BaseTicTacToeRules_GE : ITicTacToeRules_GE
+    {
+        public abstract ITicTacToeField TicTacToeField { get; }
+
+        public abstract bool MovesPossible { get; }
+
+        public abstract string Name { get; }
+
+        public abstract int CheckIfPLayerWon();
+
+        public abstract void ClearField();
+
+        public abstract void DoTicTacToeMove(ITicTacToeMove move);
+
+        public IGameField CurrentField { get { return TicTacToeField; } }
+
+        public void DoMove(IPlayMove move)
+        {
+            if (move is ITicTacToeMove)
+            {
+                DoTicTacToeMove((ITicTacToeMove)move);
+            }
+        }
+
+        public abstract void AskForGameSize();
+    }
+
     public class GE_TicTacToeField : BaseTicTacToeField
     {
         int _Size;
@@ -257,6 +290,12 @@ namespace OOPGames
                 }
             }
         }
+
+        public void AskForGameSize()
+        {
+            throw new NotImplementedException();
+        }
+
     }
     
     public class GE_TicTacToeMove : ITicTacToeMove

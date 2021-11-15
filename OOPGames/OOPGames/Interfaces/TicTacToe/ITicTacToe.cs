@@ -38,6 +38,11 @@ namespace OOPGames
         void DoTicTacToeMove(ITicTacToeMove move);
     }
 
+    public interface ITicTacToeRules_GE : ITicTacToeRules
+    {
+        void AskForGameSize();
+    }
+
     //TicTacToeMove which is derived from row and column
     //DIESES INTERFACE NICHT ÄNDERN!
     public interface ITicTacToeMove : IRowMove, IColumnMove
