@@ -215,6 +215,7 @@ namespace OOPGames
 
 
     }
+    OOPGamesManager.Singleton.RegisterPlayer(new GE_TicTacToeHumanPlayer());
     public class GA_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
         int _PlayerNumber = 0;
