@@ -12,8 +12,11 @@ using System.Windows.Shapes;
 /*
  Am montag den Griesbauer Fragen: 
 -Warum gehts nicht?
--
+-Test
 Bisschen einlesen
+
+Test
+
  */
 
 namespace OOPGames
@@ -27,7 +30,7 @@ namespace OOPGames
             canvas.Children.Clear();
             Color bgColor = Color.FromRgb(255, 255, 255);
             canvas.Background = new SolidColorBrush(bgColor);
-            Color lineColor = Color.FromRgb(0, 255, 0);
+            Color lineColor = Color.FromRgb(0, 255, 255);
             Brush lineStroke = new SolidColorBrush(lineColor);
             Color XColor = Color.FromRgb(0, 255, 0);
             Brush XStroke = new SolidColorBrush(XColor);
@@ -65,11 +68,114 @@ namespace OOPGames
     }
 
 
+    
+    public class GE_TicTacToeRules : BaseTicTacToeRules_GE
+    {
+        GE_TicTacToeField _Field = new GE_TicTacToeField(5);
 
+        public override ITicTacToeField TicTacToeField { get { return _Field; } }
+
+        public override bool MovesPossible 
+        { 
+            get 
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (_Field[i, j] == 0)
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false; 
+            } 
+        }
+
+        public override string Name { get { return "GE_TicTacToeRules"; } }
+
+        public override int CheckIfPLayerWon()
+        {
+            for (int p = 1; p < 3; p++)
+            {
+                for (int i = 0; i < 3; i++)
+                {
+                    if (_Field[i, 0] > 0 && _Field[i, 0] == _Field[i, 1] && _Field[i, 1] == _Field[i, 2])
+                    {
+                        return p;
+                    }
+                    else if (_Field[0, i] > 0 && _Field[0, i] == _Field[1, i] && _Field[1, i] == _Field[2, i])
+                    {
+                        return p;
+                    }
+                }
+
+                if ((_Field[0, 0] > 0 && _Field[0, 0] == _Field[1, 1] && _Field[1, 1] == _Field[2, 2]) ||
+                    (_Field[0, 2] > 0 && _Field[0, 2] == _Field[1, 1] && _Field[1, 1] == _Field[2, 0]))
+                {
+                    return p;
+                }
+            }
+
+            return -1;
+        }
+
+        public override void ClearField()
+        {
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    _Field[i, j] = 0;
+                }
+            }
+        }
+
+        public override void DoTicTacToeMove(ITicTacToeMove move)
+        {
+            if (move.Row >= 0 && move.Row < 3 && move.Column >= 0 && move.Column < 3)
+            {
+                _Field[move.Row, move.Column] = move.PlayerNumber;
+            }
+        }
+
+        public override void AskForGameSize()
+        {
+            throw new NotImplementedException();
+
+            public static class Prompt
+        {
+            public static int ShowDialog(string text, string caption)
+            {
+                Form prompt = new Form();
+                prompt.Width = 500;
+                prompt.Height = 100;
+                prompt.Text = caption;
+                Label textLabel = new Label() { Left = 50, Top = 20, Text = text };
+                NumericUpDown inputBox = new NumericUpDown() { Left = 50, Top = 50, Width = 400 };
+                Button confirmation = new Button() { Text = "Ok", Left = 350, Width = 100, Top = 70 };
+                confirmation.Click += (sender, e) => { prompt.Close(); };
+                prompt.Controls.Add(confirmation);
+                prompt.Controls.Add(textLabel);
+                prompt.Controls.Add(inputBox);
+                prompt.ShowDialog();
+                return (int)inputBox.Value;
+            }
+
+        }
+
+        //int promptValue = Prompt.ShowDialog("Test", "123");
+
+    }
+    }
+
+    /*
     public class GE_TicTacToeRules : BaseTicTacToeRules
     {
 
-        int fieldSize;// = [[3,3], [6,6], [9,9]]; //Besser implementieren: WO soll die Variable hin? GB
+        int[,] fieldSize = {{3,3}, {6,6}, {9,9}}; //Besser implementieren: WO soll die Variable hin? GB
         int auswahl = 0;
         TicTacToeField _Field;// = new GE_TicTacToeField();
 
@@ -79,7 +185,6 @@ namespace OOPGames
         { 
             get 
             {
-                /*
                 for (int i = 0; i < fieldSize[auswahl][0]; i++)
                 {
                     for (int j = 0; j < fieldSize[auswahl][1]; j++)
@@ -90,7 +195,6 @@ namespace OOPGames
                         }
                     }
                 }
-                */
                 return false; 
             } 
         }
@@ -142,10 +246,51 @@ namespace OOPGames
             }
         }
     }
+    */
+
+    public abstract class BaseTicTacToeRules_GE : ITicTacToeRules_GE
+    {
+        public abstract ITicTacToeField TicTacToeField { get; }
+
+        public abstract bool MovesPossible { get; }
+
+        public abstract string Name { get; }
+
+        public abstract int CheckIfPLayerWon();
+
+        public abstract void ClearField();
+
+        public abstract void DoTicTacToeMove(ITicTacToeMove move);
+
+        public IGameField CurrentField { get { return TicTacToeField; } }
+
+        public void DoMove(IPlayMove move)
+        {
+            if (move is ITicTacToeMove)
+            {
+                DoTicTacToeMove((ITicTacToeMove)move);
+            }
+        }
+
+        public abstract void AskForGameSize();
+    }
 
     public class GE_TicTacToeField : BaseTicTacToeField
     {
-        int[,] _Field = new int[3, 3] { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };//anpassen
+        int _Size;
+        int[,] _Field;
+        public GE_TicTacToeField(int s)
+        {
+            _Size = s;
+            _Field = new int[s, s];
+            for(int i = 0; i < s; i++)
+            {
+                for(int j = 0; j < s; j++)
+                {
+                    _Field[i,j] = 0;
+                }
+            }
+        }
 
         public override int this[int r, int c]
         {
@@ -169,8 +314,14 @@ namespace OOPGames
                 }
             }
         }
-    }
 
+        public void AskForGameSize()
+        {
+            throw new NotImplementedException();
+        }
+
+    }
+    
     public class GE_TicTacToeMove : ITicTacToeMove
     {
         int _Row = 0;
@@ -267,3 +418,85 @@ namespace OOPGames
         }
     }*/
 }
+
+/*
+ Beispiele DialogWindow:
+
+
+    using System;
+using System.Windows;
+
+namespace WpfTutorialSamples.Dialogs
+{
+	public partial class InputDialogSample : Window
+	{
+		public InputDialogSample(string question, string defaultAnswer = "")
+		{
+			InitializeComponent();
+			lblQuestion.Content = question;
+			txtAnswer.Text = defaultAnswer;
+		}
+
+		private void btnDialogOk_Click(object sender, RoutedEventArgs e)
+		{
+			this.DialogResult = true;
+		}
+
+		private void Window_ContentRendered(object sender, EventArgs e)
+		{
+			txtAnswer.SelectAll();
+			txtAnswer.Focus();
+		}
+
+		public string Answer
+		{
+			get { return txtAnswer.Text; }
+		}
+	}
+}
+
+using System.Windows.Forms;
+using System.Drawing;
+
+public static DialogResult InputBox(string title, string promptText, ref string value)
+{
+  Form form = new Form();
+  Label label = new Label();
+  TextBox textBox = new TextBox();
+  Button buttonOk = new Button();
+  Button buttonCancel = new Button();
+
+  form.Text = title;
+  label.Text = promptText;
+  textBox.Text = value;
+
+  buttonOk.Text = "OK";
+  buttonCancel.Text = "Cancel";
+  buttonOk.DialogResult = DialogResult.OK;
+  buttonCancel.DialogResult = DialogResult.Cancel;
+
+  label.SetBounds(9, 20, 372, 13);
+  textBox.SetBounds(12, 36, 372, 20);
+  buttonOk.SetBounds(228, 72, 75, 23);
+  buttonCancel.SetBounds(309, 72, 75, 23);
+
+  label.AutoSize = true;
+  textBox.Anchor = textBox.Anchor | AnchorStyles.Right;
+  buttonOk.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+  buttonCancel.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+  form.ClientSize = new Size(396, 107);
+  form.Controls.AddRange(new Control[] { label, textBox, buttonOk, buttonCancel });
+  form.ClientSize = new Size(Math.Max(300, label.Right + 10), form.ClientSize.Height);
+  form.FormBorderStyle = FormBorderStyle.FixedDialog;
+  form.StartPosition = FormStartPosition.CenterScreen;
+  form.MinimizeBox = false;
+  form.MaximizeBox = false;
+  form.AcceptButton = buttonOk;
+  form.CancelButton = buttonCancel;
+
+  DialogResult dialogResult = form.ShowDialog();
+  value = textBox.Text;
+  return dialogResult;
+}
+*/
