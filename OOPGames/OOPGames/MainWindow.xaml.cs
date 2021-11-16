@@ -38,19 +38,28 @@ namespace OOPGames
             //REGISTER YOUR CLASSES HERE
             //Painters
             OOPGamesManager.Singleton.RegisterPainter(new TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterPainter(new GF_TicTacToePaint());
             OOPGamesManager.Singleton.RegisterPainter(new GE_TicTacToePaint());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
-            OOPGamesManager.Singleton.RegisterRules(new GE_TicTacToeRules());
+           // OOPGamesManager.Singleton.RegisterRules(new GE_TicTacToeRules());
             OOPGamesManager.Singleton.RegisterPainter(new GB_TicTacToePaint());
+            OOPGamesManager.Singleton.RegisterRules(new BiemelRules());
             //Rules
             OOPGamesManager.Singleton.RegisterRules(new TicTacToeRules());
             OOPGamesManager.Singleton.RegisterRules(new GB_TicTacToeRules());
+<<<<<<< HEAD
+=======
+            OOPGamesManager.Singleton.RegisterRules(new BiemelRules());
+>>>>>>> 83146a63dd45b199b6ce2dac75c5ecf52d45cb81
             //Players
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GA_TicTacToeComputerPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GA_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new GB_TicTacToeHumanPlayer());
             OOPGamesManager.Singleton.RegisterPlayer(new TicTacToeComputerPlayer());
-            OOPGamesManager.Singleton.RegisterPlayer(new GE_TicTacToeHumanPlayer());
+            OOPGamesManager.Singleton.RegisterPlayer(new GF_TicTacToeMensch());
+            //OOPGamesManager.Singleton.RegisterPlayer(new GE_TicTacToeHumanPlayer());
             //OOPGamesManager.Singleton.RegisterPlayer(new GB_TicTacToeComputerPlayer());
 
             InitializeComponent();
@@ -78,6 +87,11 @@ namespace OOPGames
             _CurrentPlayer = _CurrentPlayer1;
             _CurrentPainter = PaintList.SelectedItem as IPaintGame;
             _CurrentRules = RulesList.SelectedItem as IGameRules;
+
+            if (_CurrentRules is ITicTacToeRules_GE)
+            {
+                ((ITicTacToeRules_GE)_CurrentRules).AskForGameSize();
+            }
 
             if (_CurrentPainter != null && 
                 _CurrentRules != null && _CurrentRules.CurrentField.CanBePaintedBy(_CurrentPainter))
@@ -116,6 +130,7 @@ namespace OOPGames
                     }
 
                     _CurrentPlayer = _CurrentPlayer == _CurrentPlayer1 ? _CurrentPlayer2 : _CurrentPlayer1;
+                    //Tenärer Operator("if-else-Block verkürzt") (if CP == CP1){CP=CP2}else{CP=CP1}
                 }
             }
         }

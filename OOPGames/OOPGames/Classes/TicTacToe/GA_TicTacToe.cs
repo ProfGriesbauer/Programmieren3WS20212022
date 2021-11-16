@@ -215,4 +215,44 @@ namespace OOPGames
 
 
     }
+    OOPGamesManager.Singleton.RegisterPlayer(new GE_TicTacToeHumanPlayer());
+    public class GA_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
+    {
+        int _PlayerNumber = 0;
+
+        public override string Name { get { return "GA_ComputerTicTacToePlayer"; } }
+
+        public override IGamePlayer Clone()
+        {
+            GA_TicTacToeComputerPlayer ttthp = new GA_TicTacToeComputerPlayer();
+            ttthp.SetPlayerNumber(_PlayerNumber);
+            return ttthp;
+        }
+
+        public override ITicTacToeMove GetMove(ITicTacToeField field)
+        {
+            Random rand = new Random();
+            int f = rand.Next(0, 8);
+            for (int i = 0; i < 9; i++)
+            {
+                int c = f % 3;
+                int r = ((f - c) / 3) % 3;
+                if (field[r, c] <= 0)
+                {
+                    return new TicTacToeMove(r, c, _PlayerNumber);
+                }
+                else
+                {
+                    f++;
+                }
+            }
+
+            return null;
+        }
+
+        public override void SetPlayerNumber(int playerNumber)
+        {
+            _PlayerNumber = playerNumber;
+        }
+    }
 }
