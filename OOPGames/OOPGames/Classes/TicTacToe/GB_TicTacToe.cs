@@ -93,7 +93,7 @@ namespace OOPGames
                 {
                     int x0 = (j * 100), y0 = (i * 100);
 
-                    Rectangle rect = new Rectangle() { Width = 90, Height = 90, Stroke = backStroke };
+                    Rectangle rect = new Rectangle() { Width = 90, Height = 90, Fill = backStroke };
                     Canvas.SetLeft(rect, x0 + 25); Canvas.SetTop(rect, y0 + 25);
                     canvas.Children.Add(rect);
 
@@ -350,7 +350,7 @@ namespace OOPGames
 
         public ITicTacToeMove GetMove_B(IMoveSelection selection, ITicTacToeField field)
         {
-            int x = (selection.XClickPos - 20) / 100, y = (selection.YClickPos - 20) / 100;
+            int x = (selection.XClickPos - 30) / 100, y = (selection.YClickPos - 30) / 100;
             return new TicTacToeMove(y, x, _PlayerNumber);
         }
 
@@ -360,8 +360,8 @@ namespace OOPGames
         }
     }
 
-    /*//
-    //Den Computerspieler wollten wir noch nicht implementieren
+    
+    
 
     public class GB_TicTacToeComputerPlayer : BaseComputerTicTacToePlayer
     {
@@ -402,5 +402,5 @@ namespace OOPGames
             _PlayerNumber = playerNumber;
         }
     }
-    //*/
+    
 }

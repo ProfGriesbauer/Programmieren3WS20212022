@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:OOPGames"
         mc:Ignorable="d"
-        Title="OOP Games" ResizeMode="CanResizeWithGrip" MinWidth="400" MinHeight="300" Closed="Window_Closed">
+        Title="OOP Games" ResizeMode="CanResizeWithGrip" MinWidth="400" MinHeight="300">
     
     <Window.Resources>
         <Style TargetType="Button">
@@ -23,7 +23,7 @@
                 <RowDefinition Height="1*"/>
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
-            <Canvas x:Name="PaintCanvas" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" MouseDown="PaintCanvas_MouseDown"/>
+            <Canvas x:Name="PaintCanvas" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="5,5,5,5" MouseDown="PaintCanvas_MouseDown" KeyDown="PaintCanvas_KeyDown"/>
             <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto"/>

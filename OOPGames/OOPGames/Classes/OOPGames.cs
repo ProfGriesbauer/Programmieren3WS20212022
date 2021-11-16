@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace OOPGames
 {
@@ -84,5 +85,21 @@ namespace OOPGames
         public int XClickPos { get { return _ClickX; } }
 
         public int YClickPos { get { return _ClickY; } }
+    }
+
+    public class MoveKeyboardSelection : IMoveSelectionKeyboard
+    {
+        Key _Key;
+
+        public MoveKeyboardSelection(Key key)
+        {
+            _Key = key;
+        }
+
+        public Key Key { get { return _Key; } }
+
+        public int XClickPos { get { return -1; } }
+
+        public int YClickPos { get { return -1; } }
     }
 }
