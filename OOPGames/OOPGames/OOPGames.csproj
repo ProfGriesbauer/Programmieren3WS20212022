@@ -78,17 +78,13 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-<<<<<<< HEAD
-=======
     <Compile Include="Classes\TicTacToe\GA_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GC_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GD_TicTacToe.cs" />
->>>>>>> 83146a63dd45b199b6ce2dac75c5ecf52d45cb81
     <Compile Include="Classes\TicTacToe\GE_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GB_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\Gh_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\GI_TicTacToe.cs" />
-    <Compile Include="Classes\TicTacToe\GA_TicTacToe.cs" />
     <Compile Include="Classes\TicTacToe\Versuch gruppe f.cs" />
     <Compile Include="Classes\Vorl_Bsps.cs" />
     <Compile Include="Classes\TicTacToe\BaseTicTacToe.cs" />
